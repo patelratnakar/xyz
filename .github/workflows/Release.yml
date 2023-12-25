@@ -1,0 +1,38 @@
+name: Web App Deployment
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: windows-latest
+
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v2
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '14'
+
+    - name: Install Dependencies
+      run: npm install
+
+    - name: Build
+      run: npm run build
+
+    - name: Deploy to Windows Server
+      run: |
+        # Add your deployment script or commands here
+        # For example, you might use something like SCP, FTP, or any other method to copy files to the server
+        # You may also use a tool like WinRM for PowerShell deployments
+
+        # Example SCP Deployment
+        scp -r ./dist/* user@your-windows-server:/path/to/deployment/folder
+
+    - name: Post Deployment Cleanup
+      run: |
+        # Add any post-deployment cleanup or additional steps here
